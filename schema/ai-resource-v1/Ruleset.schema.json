@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://ai-resource-spec.org/schema/ai-resource-v1/Ruleset.schema.json",
+  "$id": "https://ai-resource.dev/schema/ai-resource-v1/Ruleset.schema.json",
   "title": "Ruleset",
-  "description": "A collection of AI rules",
+  "description": "A collection of related rules",
   "type": "object",
   "required": ["apiVersion", "kind", "metadata", "spec"],
   "properties": {
@@ -15,34 +15,12 @@
       "const": "Ruleset"
     },
     "metadata": {
-      "$ref": "#/definitions/metadata"
-    },
-    "spec": {
-      "type": "object",
-      "required": ["rules"],
-      "properties": {
-        "rules": {
-          "type": "object",
-          "minProperties": 1,
-          "patternProperties": {
-            "^[a-zA-Z0-9_-]+$": {
-              "$ref": "#/definitions/rule"
-            }
-          },
-          "additionalProperties": false
-        }
-      }
-    }
-  },
-  "definitions": {
-    "metadata": {
       "type": "object",
       "required": ["id"],
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[a-zA-Z0-9_-]+$",
-          "minLength": 1
+          "pattern": "^[a-zA-Z0-9_-]+$"
         },
         "name": {
           "type": "string"
@@ -50,11 +28,32 @@
         "description": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
-    "rule": {
+    "spec": {
       "type": "object",
-      "required": ["body"],
+      "required": ["rules"],
+      "properties": {
+        "rules": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/ruleItem"
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "ruleItem": {
+      "type": "object",
+      "required": ["enforcement", "body"],
       "properties": {
         "name": {
           "type": "string"
@@ -73,25 +72,60 @@
         "scope": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/scope"
+            "type": "object",
+            "required": ["files"],
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
           }
         },
         "body": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/body"
         }
-      }
+      },
+      "additionalProperties": false
     },
-    "scope": {
-      "type": "object",
-      "properties": {
-        "files": {
+    "body": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/fragmentRef"
+              }
+            ]
+          },
+          "minItems": 1
         }
-      }
+      ]
+    },
+    "fragmentRef": {
+      "type": "object",
+      "required": ["fragment"],
+      "properties": {
+        "fragment": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "inputs": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

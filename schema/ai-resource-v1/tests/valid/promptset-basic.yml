@@ -1,0 +1,16 @@
+apiVersion: ai-resource/v1
+kind: Promptset
+metadata:
+  id: dev-prompts
+  name: Development Prompts
+spec:
+  prompts:
+    summarize:
+      name: Summarize
+      body: "Summarize the code"
+    implement:
+      body:
+        - fragment: read-file
+          inputs:
+            path: AGENTS.md
+        - "Implement the feature"

@@ -1,0 +1,18 @@
+apiVersion: ai-resource/v1
+kind: Ruleset
+metadata:
+  id: security-rules
+  name: Security Rules
+spec:
+  rules:
+    no-secrets:
+      priority: 200
+      enforcement: must
+      scope:
+        - files: ["**/*.py"]
+      body: "Never hardcode secrets"
+    validate-input:
+      enforcement: should
+      body:
+        - "Always validate user input"
+        - fragment: security-guidelines

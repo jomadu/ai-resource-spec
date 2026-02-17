@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://ai-resource-spec.org/schema/ai-resource-v1/Rule.schema.json",
+  "$id": "https://ai-resource.dev/schema/ai-resource-v1/Rule.schema.json",
   "title": "Rule",
   "description": "A single AI rule resource",
   "type": "object",
@@ -15,11 +15,25 @@
       "const": "Rule"
     },
     "metadata": {
-      "$ref": "#/definitions/metadata"
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "spec": {
       "type": "object",
-      "required": ["body"],
+      "required": ["enforcement", "body"],
       "properties": {
         "enforcement": {
           "type": "string",
@@ -28,44 +42,63 @@
         "scope": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/scope"
+            "type": "object",
+            "required": ["files"],
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
           }
         },
         "body": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/body"
         }
-      }
+      },
+      "additionalProperties": false
     }
   },
-  "definitions": {
-    "metadata": {
-      "type": "object",
-      "required": ["id"],
-      "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^[a-zA-Z0-9_-]+$",
-          "minLength": 1
-        },
-        "name": {
+  "additionalProperties": false,
+  "$defs": {
+    "body": {
+      "oneOf": [
+        {
           "type": "string"
         },
-        "description": {
-          "type": "string"
-        }
-      }
-    },
-    "scope": {
-      "type": "object",
-      "properties": {
-        "files": {
+        {
           "type": "array",
           "items": {
-            "type": "string"
-          }
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/fragmentRef"
+              }
+            ]
+          },
+          "minItems": 1
         }
-      }
+      ]
+    },
+    "fragmentRef": {
+      "type": "object",
+      "required": ["fragment"],
+      "properties": {
+        "fragment": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "inputs": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

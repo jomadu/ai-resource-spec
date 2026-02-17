@@ -1,0 +1,27 @@
+apiVersion: ai-resource/v1
+kind: Ruleset
+metadata:
+  id: security-rules
+  name: Security Rules
+  description: Security best practices for code
+spec:
+  rules:
+    no-secrets:
+      name: No Hardcoded Secrets
+      priority: 200
+      enforcement: must
+      scope:
+        - files: ["**/*.py", "**/*.js"]
+      body: "Never hardcode secrets in code"
+    
+    validate-input:
+      name: Validate Input
+      priority: 150
+      enforcement: must
+      body: "Always validate and sanitize user input"
+    
+    use-https:
+      name: Use HTTPS
+      priority: 100
+      enforcement: should
+      body: "Prefer HTTPS for external requests"

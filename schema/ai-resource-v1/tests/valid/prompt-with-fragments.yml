@@ -1,0 +1,12 @@
+apiVersion: ai-resource/v1
+kind: Prompt
+metadata:
+  id: implement-feature
+spec:
+  body:
+    - fragment: read-file
+      inputs:
+        path: AGENTS.md
+        focus: build system
+    - "Review the code"
+    - "Implement the feature"

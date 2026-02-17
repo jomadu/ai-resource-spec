@@ -1,0 +1,10 @@
+apiVersion: ai-resource/v1
+kind: Fragment
+metadata:
+  id: coding-standards
+spec:
+  body: |
+    Follow these coding standards:
+    - Write minimal code
+    - Add tests only when requested
+    - Use descriptive names

@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://ai-resource-spec.org/schema/ai-resource-v1/Promptset.schema.json",
+  "$id": "https://ai-resource.dev/schema/ai-resource-v1/Promptset.schema.json",
   "title": "Promptset",
-  "description": "A collection of AI prompts",
+  "description": "A collection of related prompts",
   "type": "object",
   "required": ["apiVersion", "kind", "metadata", "spec"],
   "properties": {
@@ -15,34 +15,12 @@
       "const": "Promptset"
     },
     "metadata": {
-      "$ref": "#/definitions/metadata"
-    },
-    "spec": {
-      "type": "object",
-      "required": ["prompts"],
-      "properties": {
-        "prompts": {
-          "type": "object",
-          "minProperties": 1,
-          "patternProperties": {
-            "^[a-zA-Z0-9_-]+$": {
-              "$ref": "#/definitions/prompt"
-            }
-          },
-          "additionalProperties": false
-        }
-      }
-    }
-  },
-  "definitions": {
-    "metadata": {
       "type": "object",
       "required": ["id"],
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[a-zA-Z0-9_-]+$",
-          "minLength": 1
+          "pattern": "^[a-zA-Z0-9_-]+$"
         },
         "name": {
           "type": "string"
@@ -50,9 +28,30 @@
         "description": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
-    "prompt": {
+    "spec": {
+      "type": "object",
+      "required": ["prompts"],
+      "properties": {
+        "prompts": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/promptItem"
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "promptItem": {
       "type": "object",
       "required": ["body"],
       "properties": {
@@ -63,10 +62,45 @@
           "type": "string"
         },
         "body": {
-          "type": "string",
-          "minLength": 1
+          "$ref": "#/$defs/body"
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "body": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/fragmentRef"
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "fragmentRef": {
+      "type": "object",
+      "required": ["fragment"],
+      "properties": {
+        "fragment": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "inputs": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

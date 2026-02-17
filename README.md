@@ -1,13 +1,16 @@
 # AI Resource Specification
 
-The AI Resource Specification defines a versioned, declarative format for describing portable AI artifacts such as prompts, rules, skills, tools, evaluations, and other structured AI assets.
+A versioned, declarative format for describing portable AI artifacts such as prompts, rules, and reusable templates.
 
-This repository is the canonical source of truth for the AI Resource contract. It defines:
+## Overview
 
-- The resource envelope (apiVersion, kind, metadata, spec)
+This specification defines:
+
+- Resource envelope structure (apiVersion, kind, metadata, spec)
+- Five resource kinds (Prompt, Promptset, Rule, Ruleset, Fragment)
+- Fragment composition model for reusable templates
 - JSON Schema for structural validation
 - Versioning and compatibility guarantees
-- Normative behavioral rules
 
 The specification is language-agnostic and contains no runtime or implementation code.
 
@@ -15,167 +18,92 @@ The specification is language-agnostic and contains no runtime or implementation
 
 - Provide a stable, extensible resource model
 - Enable deterministic validation across implementations
-- Support multiple resource kinds (singular and collections)
+- Support composition through reusable fragments
 - Allow forward-compatible evolution
 
-## Resource Envelope
+## Quick Start
 
-All resources follow a Kubernetes-style envelope structure:
-
-```yaml
-apiVersion: ai-resource/v1    # Required: API version
-kind: <ResourceKind>          # Required: Resource type
-metadata:                     # Required: Resource metadata
-  id: <identifier>            # Required: Machine identifier
-  name: <human-name>          # Optional: Human-readable name
-  description: <text>         # Optional: Description
-spec:                         # Required: Resource-specific content
-  # ... kind-specific fields
-```
-
-## Resource Kinds
-
-### Prompt (Singular)
-
-A single AI prompt resource.
+### Simple Prompt
 
 ```yaml
 apiVersion: ai-resource/v1
 kind: Prompt
 metadata:
   id: summarize
-  name: Summarize Code
-  description: Summarizes code for review
 spec:
-  body: |
-    Summarize the following code...
+  body: "Summarize the following code"
 ```
 
-### Promptset (Collection)
-
-A collection of related prompts.
+### Prompt with Fragment
 
 ```yaml
+# read-file.yml
 apiVersion: ai-resource/v1
-kind: Promptset
+kind: Fragment
 metadata:
-  id: code-review
-  name: Code Review Prompts
-  description: Prompts for code review workflows
+  id: read-file
 spec:
-  prompts:
-    summarize:
-      name: Summarize Code
-      description: Summarizes code for review
-      body: |
-        Summarize the following code...
-    explain:
-      name: Explain Logic
-      body: |
-        Explain the logic of...
+  inputs:
+    path:
+      type: string
+      required: true
+  body: "Read {{path}}"
 ```
 
-### Rule (Singular)
+```yaml
+# prompt.yml
+apiVersion: ai-resource/v1
+kind: Prompt
+metadata:
+  id: implement
+spec:
+  body:
+    - fragment: read-file
+      inputs:
+        path: AGENTS.md
+    - "Implement the feature"
+```
 
-A single AI rule resource with enforcement and scope.
+### Rule
 
 ```yaml
 apiVersion: ai-resource/v1
 kind: Rule
 metadata:
-  id: no-magic-numbers
-  name: No Magic Numbers
-  description: Avoid magic numbers in code
+  id: no-secrets
 spec:
-  enforcement: must           # may | should | must
+  enforcement: must
   scope:
     - files: ["**/*.py"]
-  body: |
-    Avoid using magic numbers...
+  body: "Never hardcode secrets in code"
 ```
 
-### Ruleset (Collection)
+## Documentation
 
-A collection of related rules.
+### Core Specification
 
-```yaml
-apiVersion: ai-resource/v1
-kind: Ruleset
-metadata:
-  id: clean-code
-  name: Clean Code Rules
-  description: Rules for writing clean code
-spec:
-  rules:
-    no-magic-numbers:
-      name: No Magic Numbers
-      description: Avoid magic numbers
-      priority: 100           # Optional: default 100
-      enforcement: must       # may | should | must
-      scope:
-        - files: ["**/*.py"]
-      body: |
-        Avoid using magic numbers...
-    descriptive-names:
-      name: Use Descriptive Names
-      enforcement: should
-      body: |
-        Use descriptive variable names...
-```
+- **[ENVELOPE.md](ENVELOPE.md)** - Resource envelope structure and metadata
+- **[RESOURCE-KINDS.md](RESOURCE-KINDS.md)** - All resource kinds and their specifications
+- **[RULES.md](RULES.md)** - Rule-specific behavior (enforcement, scope, priority)
+- **[FRAGMENTS.md](FRAGMENTS.md)** - Fragment composition and template syntax
+- **[VALIDATION.md](VALIDATION.md)** - Validation requirements and conformance
 
-## Metadata Fields
+### Implementation
 
-All resources require a `metadata` section with:
-
-- `id` (required): Machine identifier, must match `^[a-zA-Z0-9_-]+$`
-- `name` (optional): Human-readable name
-- `description` (optional): Resource description
-
-## Rule-Specific Fields
-
-### Enforcement Levels
-
-Rules support three enforcement levels:
-
-- `may`: Optional suggestion
-- `should`: Recommended practice
-- `must`: Required constraint
-
-### Scope
-
-Rules can target specific files using glob patterns:
-
-```yaml
-scope:
-  - files: ["**/*.py"]
-  - files: ["src/**/*.ts", "lib/**/*.ts"]
-```
-
-## Collection Structure
-
-Collections (Promptset, Ruleset) use maps (not arrays) for items:
-
-- Keys must match `^[a-zA-Z0-9_-]+$`
-- Keys must be unique within the collection
-- Minimum one item required
+- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Implementation guide and algorithms
 
 ## Versioning
 
+Current version: **ai-resource/v1**
+
 Schema versions are defined under `/schema/<version>/`. Breaking changes require a new major version. Backward-compatible changes may be introduced within the same version.
-
-Current version: `ai-resource/v1`
-
-## Validation
-
-JSON schemas are provided for each resource kind:
-
-- `/schema/ai-resource-v1/Prompt.schema.json`
-- `/schema/ai-resource-v1/Promptset.schema.json`
-- `/schema/ai-resource-v1/Rule.schema.json`
-- `/schema/ai-resource-v1/Ruleset.schema.json`
-
-All implementations must validate resources against these schemas.
 
 ## Implementations
 
-All implementations, including `ai-resource-core-go` and `ai-resource-manager`, must conform to this specification.
+All implementations must conform to this specification:
+
+- **ai-resource-core-go** - Go implementation
+
+## Contributing
+
+This repository is the canonical source of truth for the AI Resource contract. Changes to the specification require careful consideration of backward compatibility and implementation impact.

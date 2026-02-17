@@ -1,0 +1,19 @@
+apiVersion: ai-resource/v1
+kind: Promptset
+metadata:
+  id: code-review
+  name: Code Review Prompts
+  description: Prompts for code review workflows
+spec:
+  prompts:
+    summarize:
+      name: Summarize Code
+      body: "Summarize the code changes"
+    
+    security-check:
+      name: Security Check
+      body: "Review for security vulnerabilities"
+    
+    performance:
+      name: Performance Review
+      body: "Analyze performance implications"

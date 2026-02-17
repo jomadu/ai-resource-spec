@@ -1,0 +1,14 @@
+apiVersion: ai-resource/v1
+kind: Fragment
+metadata:
+  id: read-file
+  name: Read File
+spec:
+  inputs:
+    path:
+      type: string
+      required: true
+    focus:
+      type: string
+      default: ""
+  body: "Read {{path}}{{#focus}} and focus on {{focus}}{{/focus}}."

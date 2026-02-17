@@ -1,0 +1,8 @@
+apiVersion: ai-resource/v1
+kind: Fragment
+metadata:
+  id: missing-body
+spec:
+  inputs:
+    path:
+      type: string

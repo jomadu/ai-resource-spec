@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://ai-resource-spec.org/schema/ai-resource-v1/Prompt.schema.json",
+  "$id": "https://ai-resource.dev/schema/ai-resource-v1/Prompt.schema.json",
   "title": "Prompt",
   "description": "A single AI prompt resource",
   "type": "object",
@@ -15,28 +15,12 @@
       "const": "Prompt"
     },
     "metadata": {
-      "$ref": "#/definitions/metadata"
-    },
-    "spec": {
-      "type": "object",
-      "required": ["body"],
-      "properties": {
-        "body": {
-          "type": "string",
-          "minLength": 1
-        }
-      }
-    }
-  },
-  "definitions": {
-    "metadata": {
       "type": "object",
       "required": ["id"],
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^[a-zA-Z0-9_-]+$",
-          "minLength": 1
+          "pattern": "^[a-zA-Z0-9_-]+$"
         },
         "name": {
           "type": "string"
@@ -44,7 +28,56 @@
         "description": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": ["body"],
+      "properties": {
+        "body": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "body": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/fragmentRef"
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "fragmentRef": {
+      "type": "object",
+      "required": ["fragment"],
+      "properties": {
+        "fragment": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "inputs": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

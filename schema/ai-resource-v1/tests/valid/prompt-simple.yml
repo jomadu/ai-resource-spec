@@ -1,0 +1,7 @@
+apiVersion: ai-resource/v1
+kind: Prompt
+metadata:
+  id: summarize
+  name: Summarize Code
+spec:
+  body: "Summarize the following code"

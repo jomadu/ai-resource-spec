@@ -1,0 +1,6 @@
+apiVersion: ai-resource/v1
+kind: Promptset
+metadata:
+  id: empty-prompts
+spec:
+  prompts: {}
