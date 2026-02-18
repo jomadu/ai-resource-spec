@@ -1,0 +1,58 @@
+apiVersion: ai-resource/draft
+kind: Promptset
+metadata:
+  id: code-review-workflow
+  name: Code Review Workflow
+  description: Complete code review workflow prompts
+spec:
+  fragments:
+    context-setup:
+      body: |
+        Consider the following context:
+        - Operating system and environment
+        - Project structure and dependencies
+        - Existing code patterns
+    analyze-files:
+      inputs:
+        files:
+          type: array
+          items:
+            type: string
+          required: true
+        focus:
+          type: string
+      body: |
+        Analyze these files:
+        {{#files}}
+        - {{.}}
+        {{/files}}
+        {{#focus}}
+        Focus on: {{focus}}
+        {{/focus}}
+  prompts:
+    initial-review:
+      name: Initial Review
+      body:
+        - fragment: context-setup
+        - fragment: analyze-files
+          inputs:
+            files: ["src/main.py", "src/utils.py", "tests/test_main.py"]
+        - "Provide an initial code review summary"
+    
+    security-review:
+      name: Security Review
+      body:
+        - fragment: analyze-files
+          inputs:
+            files: ["src/main.py", "src/utils.py"]
+            focus: security vulnerabilities
+        - "Identify potential security issues"
+    
+    performance-review:
+      name: Performance Review
+      body:
+        - fragment: analyze-files
+          inputs:
+            files: ["src/main.py"]
+            focus: performance bottlenecks
+        - "Suggest performance improvements"

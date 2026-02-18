@@ -1,0 +1,32 @@
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: test-prompt
+spec:
+  fragments:
+    test-fragment:
+      inputs:
+        files:
+          type: array
+          items:
+            type: string
+          required: true
+        tasks:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              priority:
+                type: number
+      body: "Process files and tasks"
+  body:
+    - fragment: test-fragment
+      inputs:
+        files: ["file1.py", "file2.py"]
+        tasks:
+          - name: Build
+            priority: 1
+          - name: Test
+            priority: 2

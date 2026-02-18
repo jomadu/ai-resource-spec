@@ -1,0 +1,21 @@
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: implement-feature
+spec:
+  fragments:
+    read-file:
+      inputs:
+        path:
+          type: string
+          required: true
+        focus:
+          type: string
+      body: "Read {{path}}{{#focus}} and focus on {{focus}}{{/focus}}"
+  body:
+    - fragment: read-file
+      inputs:
+        path: AGENTS.md
+        focus: build system
+    - "Review the code"
+    - "Implement the feature"

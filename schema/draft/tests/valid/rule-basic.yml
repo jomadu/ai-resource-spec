@@ -1,0 +1,10 @@
+apiVersion: ai-resource/draft
+kind: Rule
+metadata:
+  id: no-secrets
+  name: No Hardcoded Secrets
+spec:
+  enforcement: must
+  scope:
+    - files: ["**/*.py", "**/*.js"]
+  body: "Never hardcode secrets in code"

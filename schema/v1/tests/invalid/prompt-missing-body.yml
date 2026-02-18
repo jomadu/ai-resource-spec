@@ -1,5 +1,0 @@
-apiVersion: ai-resource/v1
-kind: Prompt
-metadata:
-  id: missing-body
-spec: {}

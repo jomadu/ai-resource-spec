@@ -1,0 +1,7 @@
+apiVersion: ai-resource/draft
+kind: Rule
+metadata:
+  id: invalid-enforcement
+spec:
+  enforcement: required
+  body: "Test"

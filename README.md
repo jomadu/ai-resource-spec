@@ -16,14 +16,14 @@ The specification is language-agnostic and contains no runtime or implementation
 
 ## Current Version
 
-**Latest stable:** [v1](spec/v1/)
+**Latest draft:** [draft](spec/draft/)
 
 ## Quick Start
 
 ### Simple Prompt
 
 ```yaml
-apiVersion: ai-resource/v1
+apiVersion: ai-resource/draft
 kind: Prompt
 metadata:
   id: summarize
@@ -31,29 +31,21 @@ spec:
   body: "Summarize the following code"
 ```
 
-### Prompt with Fragment
+### Prompt with Inline Fragment
 
 ```yaml
-# read-file.yml
-apiVersion: ai-resource/v1
-kind: Fragment
-metadata:
-  id: read-file
-spec:
-  inputs:
-    path:
-      type: string
-      required: true
-  body: "Read {{path}}"
-```
-
-```yaml
-# prompt.yml
-apiVersion: ai-resource/v1
+apiVersion: ai-resource/draft
 kind: Prompt
 metadata:
   id: implement
 spec:
+  fragments:
+    read-file:
+      inputs:
+        path:
+          type: string
+          required: true
+      body: "Read {{path}}"
   body:
     - fragment: read-file
       inputs:
@@ -64,7 +56,7 @@ spec:
 ### Rule
 
 ```yaml
-apiVersion: ai-resource/v1
+apiVersion: ai-resource/draft
 kind: Rule
 metadata:
   id: no-secrets
@@ -77,23 +69,23 @@ spec:
 
 ## Documentation
 
-### Version 1 (Current)
+### Draft Version (Current)
 
 **Core Specification:**
-- **[envelope.md](spec/v1/envelope.md)** - Resource envelope structure and metadata
-- **[resource-kinds.md](spec/v1/resource-kinds.md)** - All resource kinds and their specifications
-- **[rules.md](spec/v1/rules.md)** - Rule-specific behavior (enforcement, scope, priority)
-- **[fragments.md](spec/v1/fragments.md)** - Fragment composition and template syntax
-- **[validation.md](spec/v1/validation.md)** - Validation requirements and conformance
+- **[envelope.md](spec/draft/envelope.md)** - Resource envelope structure and metadata
+- **[resource-kinds.md](spec/draft/resource-kinds.md)** - All resource kinds and their specifications
+- **[rules.md](spec/draft/rules.md)** - Rule-specific behavior (enforcement, scope, priority)
+- **[fragments.md](spec/draft/fragments.md)** - Fragment composition and template syntax
+- **[validation.md](spec/draft/validation.md)** - Validation requirements and conformance
 
 **Implementation:**
-- **[implementation.md](spec/v1/implementation.md)** - Implementation guide and algorithms
+- **[implementation.md](spec/draft/implementation.md)** - Implementation guide and algorithms
 
 **Schemas:**
-- [schema/v1/](schema/v1/) - JSON Schema definitions for all resource kinds
+- [schema/draft/](schema/draft/) - JSON Schema definitions for all resource kinds
 
 **Examples:**
-- [examples/v1/](examples/v1/) - Example resources demonstrating usage
+- [examples/draft/](examples/draft/) - Example resources demonstrating usage
 
 ## Architecture Decisions
 
@@ -102,6 +94,8 @@ spec:
 ## Versioning
 
 Schema versions are defined under `/schema/v<major>/`. Breaking changes require a new major version. Backward-compatible changes may be introduced within the same version.
+
+The current specification is in **draft** status and has not yet reached v1.
 
 ## Implementations
 

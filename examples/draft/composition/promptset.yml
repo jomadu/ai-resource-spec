@@ -1,0 +1,45 @@
+apiVersion: ai-resource/draft
+kind: Promptset
+metadata:
+  id: dev-workflow
+  name: Development Workflow
+spec:
+  fragments:
+    read-file:
+      inputs:
+        path:
+          type: string
+          required: true
+        focus:
+          type: string
+      body: "Read {{path}}{{#focus}} and focus on {{focus}}{{/focus}}"
+    coding-standards:
+      body: |
+        Follow these coding standards:
+        - Write minimal code
+        - Add tests only when requested
+        - Use descriptive names
+  prompts:
+    implement:
+      name: Implement Feature
+      body:
+        - fragment: read-file
+          inputs:
+            path: AGENTS.md
+        - fragment: coding-standards
+        - "Implement the feature"
+    
+    fix-bug:
+      name: Fix Bug
+      body:
+        - fragment: read-file
+          inputs:
+            path: AGENTS.md
+            focus: error handling
+        - "Analyze and fix the bug"
+    
+    refactor:
+      name: Refactor Code
+      body:
+        - fragment: coding-standards
+        - "Refactor the code for clarity"

@@ -1,6 +1,0 @@
-apiVersion: ai-resource/v1
-kind: Fragment
-metadata:
-  id: invalid id with spaces
-spec:
-  body: "Test"

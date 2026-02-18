@@ -1,0 +1,19 @@
+apiVersion: ai-resource/draft
+kind: Ruleset
+metadata:
+  id: test-ruleset
+spec:
+  fragments:
+    check-pattern:
+      inputs:
+        pattern:
+          type: string
+          required: true
+      body: "Check for {{pattern}}"
+  rules:
+    test-rule:
+      enforcement: must
+      body:
+        - fragment: check-pattern
+          inputs:
+            pattern: security issues

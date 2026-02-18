@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by [ADR-002](002-inline-fragments.md)
 
 ## Context
 
@@ -221,4 +221,4 @@ Future ADRs should reference this decision when considering:
 **Date**: 2026-02-17  
 **Participants**: Specification design team  
 **Supersedes**: None  
-**Superseded by**: None (current)
+**Superseded by**: [ADR-002](002-inline-fragments.md) (2026-02-18)

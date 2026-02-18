@@ -1,0 +1,47 @@
+apiVersion: ai-resource/draft
+kind: Ruleset
+metadata:
+  id: python-best-practices
+  name: Python Best Practices
+  description: Best practices for Python development
+spec:
+  rules:
+    no-secrets:
+      name: No Hardcoded Secrets
+      priority: 200
+      enforcement: must
+      scope:
+        - files: ["**/*.py"]
+      body: "Never hardcode secrets, API keys, or passwords in Python code"
+    
+    type-hints:
+      name: Use Type Hints
+      priority: 150
+      enforcement: should
+      scope:
+        - files: ["**/*.py"]
+      body: "Use type hints for function parameters and return values"
+    
+    docstrings:
+      name: Write Docstrings
+      priority: 100
+      enforcement: should
+      scope:
+        - files: ["**/*.py"]
+      body: "Write docstrings for all public functions and classes"
+    
+    error-handling:
+      name: Proper Error Handling
+      priority: 150
+      enforcement: must
+      scope:
+        - files: ["**/*.py"]
+      body: "Use specific exception types and proper error handling"
+    
+    naming-conventions:
+      name: Follow Naming Conventions
+      priority: 50
+      enforcement: should
+      scope:
+        - files: ["**/*.py"]
+      body: "Follow PEP 8 naming conventions: snake_case for functions, PascalCase for classes"

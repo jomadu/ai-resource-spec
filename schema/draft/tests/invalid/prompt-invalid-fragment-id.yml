@@ -1,0 +1,9 @@
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: test-prompt
+spec:
+  fragments:
+    test fragment:
+      body: "Invalid fragment ID with space"
+  body: "Test"

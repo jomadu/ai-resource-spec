@@ -1,0 +1,8 @@
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: summarize
+  name: Summarize Code
+  description: Generates a concise summary of code
+spec:
+  body: "Summarize the following code for review"

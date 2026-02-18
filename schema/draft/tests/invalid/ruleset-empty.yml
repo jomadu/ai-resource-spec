@@ -1,0 +1,6 @@
+apiVersion: ai-resource/draft
+kind: Ruleset
+metadata:
+  id: empty-rules
+spec:
+  rules: {}

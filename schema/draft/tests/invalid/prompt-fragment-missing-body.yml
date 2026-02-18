@@ -1,0 +1,11 @@
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: test-prompt
+spec:
+  fragments:
+    test-fragment:
+      inputs:
+        value:
+          type: string
+  body: "Missing body in fragment definition"

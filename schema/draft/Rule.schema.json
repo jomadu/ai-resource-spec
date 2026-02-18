@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-resource.dev/schema/draft/Rule.schema.json",
+  "title": "Rule",
+  "description": "A single AI rule resource",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {
+      "type": "string",
+      "const": "ai-resource/draft"
+    },
+    "kind": {
+      "type": "string",
+      "const": "Rule"
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "required": ["enforcement", "body"],
+      "properties": {
+        "fragments": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/fragmentDefinition"
+            }
+          },
+          "additionalProperties": false
+        },
+        "enforcement": {
+          "type": "string",
+          "enum": ["may", "should", "must"]
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["files"],
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "fragmentDefinition": {
+      "type": "object",
+      "required": ["body"],
+      "properties": {
+        "inputs": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/inputDefinition"
+            }
+          },
+          "additionalProperties": false
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputDefinition": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "number", "boolean", "array", "object"]
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "default": {},
+        "items": {
+          "$ref": "#/$defs/inputDefinition"
+        },
+        "properties": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/inputDefinition"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "body": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/fragmentRef"
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      ]
+    },
+    "fragmentRef": {
+      "type": "object",
+      "required": ["fragment"],
+      "properties": {
+        "fragment": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$"
+        },
+        "inputs": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
