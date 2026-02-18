@@ -14,12 +14,9 @@ This specification defines:
 
 The specification is language-agnostic and contains no runtime or implementation code.
 
-## Goals
+## Current Version
 
-- Provide a stable, extensible resource model
-- Enable deterministic validation across implementations
-- Support composition through reusable fragments
-- Allow forward-compatible evolution
+**Latest stable:** [v1](spec/v1/)
 
 ## Quick Start
 
@@ -80,23 +77,31 @@ spec:
 
 ## Documentation
 
-### Core Specification
+### Version 1 (Current)
 
-- **[ENVELOPE.md](ENVELOPE.md)** - Resource envelope structure and metadata
-- **[RESOURCE-KINDS.md](RESOURCE-KINDS.md)** - All resource kinds and their specifications
-- **[RULES.md](RULES.md)** - Rule-specific behavior (enforcement, scope, priority)
-- **[FRAGMENTS.md](FRAGMENTS.md)** - Fragment composition and template syntax
-- **[VALIDATION.md](VALIDATION.md)** - Validation requirements and conformance
+**Core Specification:**
+- **[envelope.md](spec/v1/envelope.md)** - Resource envelope structure and metadata
+- **[resource-kinds.md](spec/v1/resource-kinds.md)** - All resource kinds and their specifications
+- **[rules.md](spec/v1/rules.md)** - Rule-specific behavior (enforcement, scope, priority)
+- **[fragments.md](spec/v1/fragments.md)** - Fragment composition and template syntax
+- **[validation.md](spec/v1/validation.md)** - Validation requirements and conformance
 
-### Implementation
+**Implementation:**
+- **[implementation.md](spec/v1/implementation.md)** - Implementation guide and algorithms
 
-- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Implementation guide and algorithms
+**Schemas:**
+- [schema/v1/](schema/v1/) - JSON Schema definitions for all resource kinds
+
+**Examples:**
+- [examples/v1/](examples/v1/) - Example resources demonstrating usage
+
+## Architecture Decisions
+
+- **[ADRs/](ADRs/)** - Architecture Decision Records documenting key design choices
 
 ## Versioning
 
-Current version: **ai-resource/v1**
-
-Schema versions are defined under `/schema/<version>/`. Breaking changes require a new major version. Backward-compatible changes may be introduced within the same version.
+Schema versions are defined under `/schema/v<major>/`. Breaking changes require a new major version. Backward-compatible changes may be introduced within the same version.
 
 ## Implementations
 

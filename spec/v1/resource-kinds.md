@@ -1,4 +1,4 @@
-# Resource Kinds
+# Resource Kinds (v1)
 
 The specification defines five resource kinds: two singular types, two collection types, and one template type.
 
@@ -239,4 +239,4 @@ body:
   - "Additional instructions"
 ```
 
-See [FRAGMENTS.md](FRAGMENTS.md) for complete details on fragment composition.
+See [FRAGMENTS.md](fragments.md) for complete details on fragment composition.

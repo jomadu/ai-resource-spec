@@ -198,9 +198,9 @@ This decision is **provisional** and subject to the following conditions:
 
 ## References
 
-- [FRAGMENTS.md](FRAGMENTS.md) - Fragment specification
-- [RESOURCE-KINDS.md](RESOURCE-KINDS.md) - All resource kinds
-- [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation guide including fragment resolution
+- [fragments.md](fragments.md) - Fragment specification
+- [resource-kinds.md](resource-kinds.md) - All resource kinds
+- [implementation.md](implementation.md) - Implementation guide including fragment resolution
 - Terraform `terraform_data` documentation
 - Mustache specification: https://mustache.github.io/
 

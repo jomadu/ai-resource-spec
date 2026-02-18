@@ -1,4 +1,4 @@
-# Resource Envelope
+# Resource Envelope (v1)
 
 All AI resources follow a Kubernetes-style envelope structure with four required top-level fields.
 

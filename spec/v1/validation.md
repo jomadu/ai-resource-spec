@@ -1,4 +1,4 @@
-# Validation
+# Validation (v1)
 
 All resources must be validated against their JSON Schema definitions.
 
@@ -6,11 +6,11 @@ All resources must be validated against their JSON Schema definitions.
 
 JSON schemas are provided for each resource kind:
 
-- `/schema/ai-resource-v1/Prompt.schema.json`
-- `/schema/ai-resource-v1/Promptset.schema.json`
-- `/schema/ai-resource-v1/Rule.schema.json`
-- `/schema/ai-resource-v1/Ruleset.schema.json`
-- `/schema/ai-resource-v1/Fragment.schema.json`
+- `/schema/v1/Prompt.schema.json`
+- `/schema/v1/Promptset.schema.json`
+- `/schema/v1/Rule.schema.json`
+- `/schema/v1/Ruleset.schema.json`
+- `/schema/v1/Fragment.schema.json`
 
 ## Validation Requirements
 

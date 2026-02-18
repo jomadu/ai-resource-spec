@@ -1,4 +1,4 @@
-# Fragment Composition
+# Fragment Composition (v1)
 
 Fragments are reusable, parameterizable templates that compose into prompts and rules.
 

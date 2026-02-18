@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://ai-resource.dev/schema/ai-resource-v1/Prompt.schema.json",
-  "title": "Prompt",
-  "description": "A single AI prompt resource",
+  "$id": "https://ai-resource.dev/schema/v1/Ruleset.schema.json",
+  "title": "Ruleset",
+  "description": "A collection of related rules",
   "type": "object",
   "required": ["apiVersion", "kind", "metadata", "spec"],
   "properties": {
@@ -12,7 +12,7 @@
     },
     "kind": {
       "type": "string",
-      "const": "Prompt"
+      "const": "Ruleset"
     },
     "metadata": {
       "type": "object",
@@ -33,10 +33,17 @@
     },
     "spec": {
       "type": "object",
-      "required": ["body"],
+      "required": ["rules"],
       "properties": {
-        "body": {
-          "$ref": "#/$defs/body"
+        "rules": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "$ref": "#/$defs/ruleItem"
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
         }
       },
       "additionalProperties": false
@@ -44,6 +51,47 @@
   },
   "additionalProperties": false,
   "$defs": {
+    "ruleItem": {
+      "type": "object",
+      "required": ["enforcement", "body"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer",
+          "default": 100
+        },
+        "enforcement": {
+          "type": "string",
+          "enum": ["may", "should", "must"]
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["files"],
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/body"
+        }
+      },
+      "additionalProperties": false
+    },
     "body": {
       "oneOf": [
         {

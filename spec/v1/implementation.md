@@ -1,4 +1,4 @@
-# Implementation Guide
+# Implementation Guide (v1)
 
 Reference guide for implementing the AI Resource Specification.
 
@@ -202,8 +202,8 @@ These limits should be configurable.
 
 Implementations should test against:
 
-1. **Schema test suite**: `/schema/ai-resource-v1/tests/`
-2. **Examples**: `/examples/`
+1. **Schema test suite**: `/schema/v1/tests/`
+2. **Examples**: `/examples/v1/`
 3. **Edge cases**: Empty collections, missing fragments, circular references (should error)
 
 ## Conformance

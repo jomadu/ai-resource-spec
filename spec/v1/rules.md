@@ -1,4 +1,4 @@
-# Rules
+# Rules (v1)
 
 Rules define constraints, recommendations, or suggestions for AI behavior. They include enforcement levels, optional scope targeting, and optional priority.
 
