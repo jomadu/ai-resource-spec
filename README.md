@@ -7,8 +7,8 @@ A versioned, declarative format for describing portable AI artifacts such as pro
 This specification defines:
 
 - Resource envelope structure (apiVersion, kind, metadata, spec)
-- Five resource kinds (Prompt, Promptset, Rule, Ruleset, Fragment)
-- Fragment composition model for reusable templates
+- Four resource kinds (Prompt, Promptset, Rule, Ruleset)
+- Inline fragment composition for reusable templates
 - JSON Schema for structural validation
 - Versioning and compatibility guarantees
 
@@ -90,12 +90,24 @@ spec:
 ## Architecture Decisions
 
 - **[ADRs/](ADRs/)** - Architecture Decision Records documenting key design choices
+  - [ADR-001](ADRs/001-fragments-as-resources.md) - Fragments as first-class resources (superseded)
+  - [ADR-002](ADRs/002-inline-fragments.md) - Inline fragments instead of standalone resources
+  - [ADR-003](ADRs/003-skills-out-of-scope.md) - Why Agent Skills are out of scope
 
 ## Versioning
 
 Schema versions are defined under `/schema/v<major>/`. Breaking changes require a new major version. Backward-compatible changes may be introduced within the same version.
 
 The current specification is in **draft** status and has not yet reached v1.
+
+## Relationship to Agent Skills
+
+The AI Resource Specification is complementary to [Agent Skills](https://agentskills.io), not overlapping:
+
+- **Agent Skills**: Procedural knowledge and workflows (e.g., "how to process PDFs")
+- **AI Resource Spec**: Declarative instructions and constraints (e.g., "summarize code", "never hardcode secrets")
+
+Agent Skills already provides a unified, widely-adopted standard for packaging agent capabilities. The AI Resource Spec focuses on unifying fragmented prompt and rule formats across tools. See [ADR-003](ADRs/003-skills-out-of-scope.md) for details.
 
 ## Implementations
 
