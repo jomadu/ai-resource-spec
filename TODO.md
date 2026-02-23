@@ -19,7 +19,7 @@ Reference: ISSUES.md #7
 
 ## TASK-002
 - Priority: 1
-- Status: TODO
+- Status: DONE
 - Dependencies: []
 - Description: Split validation.md into schema/semantic phases with detailed rules
 
