@@ -101,3 +101,52 @@ spec:
 - `metadata.id` must match pattern `^[a-zA-Z0-9_-]+$`
 - `metadata.id` must be unique within the directory namespace
 - `spec` structure must conform to the schema for the specified `kind`
+
+## Multi-Document YAML
+
+YAML files may contain multiple resources separated by `---` document separators.
+
+### Semantics
+
+- Each document is an independent resource
+- `metadata.id` must be unique within the file
+- Fragments defined in `spec.fragments` are scoped to their document (cannot reference across documents)
+- Different resource kinds may appear in the same file
+
+### Example
+
+```yaml
+---
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: summarize
+spec:
+  body: "Summarize the following code"
+---
+apiVersion: ai-resource/draft
+kind: Rule
+metadata:
+  id: no-secrets
+spec:
+  enforcement: must
+  body: "Never hardcode secrets"
+---
+apiVersion: ai-resource/draft
+kind: Prompt
+metadata:
+  id: implement
+spec:
+  fragments:
+    read-file:
+      inputs:
+        path:
+          type: string
+          required: true
+      body: "Read {{path}}"
+  body:
+    - fragment: read-file
+      inputs:
+        path: AGENTS.md
+    - "Implement the feature"
+```
