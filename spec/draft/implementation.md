@@ -144,6 +144,16 @@ function applyDefaults(inputDefs, providedInputs):
   return result
 ```
 
+## Enforcement Level Handling
+
+Implementations should interpret enforcement levels as follows:
+
+- **may**: Include rule in context. No validation or warnings.
+- **should**: Include rule in context. Implementations MAY warn users when violations are detected.
+- **must**: Include rule in context. Implementations SHOULD prevent or block actions that violate the rule.
+
+Note: Enforcement is best-effort. AI systems cannot guarantee perfect compliance.
+
 ## Error Handling
 
 ### Validation Errors

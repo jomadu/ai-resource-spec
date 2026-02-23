@@ -51,7 +51,7 @@ Reference: ISSUES.md #4
 
 ## TASK-003
 - Priority: 2
-- Status: TODO
+- Status: DONE
 - Dependencies: []
 - Description: Add concrete enforcement semantics to implementation.md
 
