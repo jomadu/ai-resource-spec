@@ -100,6 +100,15 @@ Schema versions are defined under `/schema/v<major>/`. Breaking changes require 
 
 The current specification is in **draft** status and has not yet reached v1.
 
+## Version Migration
+
+When v1 is released, the following migration strategy will apply:
+
+- **Draft support period**: Draft resources will be supported for 6 months after v1 release
+- **Deprecation warnings**: Implementations should warn users when loading draft resources after v1 is available
+- **Migration tooling**: A `tools/migrate` CLI tool will be provided to convert draft resources to v1 format
+- **Compatibility guarantees**: Breaking changes require a new major version. Within a major version, backward-compatible changes may be introduced
+
 ## Relationship to Agent Skills
 
 The AI Resource Specification is complementary to [Agent Skills](https://agentskills.io), not overlapping:
