@@ -9,8 +9,4 @@ spec:
       name: Summarize
       body: "Summarize the code"
     implement:
-      body:
-        - fragment: read-file
-          inputs:
-            path: AGENTS.md
-        - "Implement the feature"
+      body: "Implement the feature"

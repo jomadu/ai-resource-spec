@@ -13,6 +13,4 @@ spec:
       body: "Never hardcode secrets"
     validate-input:
       enforcement: should
-      body:
-        - "Always validate user input"
-        - fragment: security-guidelines
+      body: "Always validate user input"
