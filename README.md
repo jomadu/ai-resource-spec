@@ -118,12 +118,6 @@ The AI Resource Specification is complementary to [Agent Skills](https://agentsk
 
 Agent Skills already provides a unified, widely-adopted standard for packaging agent capabilities. The AI Resource Spec focuses on unifying fragmented prompt and rule formats across tools. See [ADR-003](ADRs/003-skills-out-of-scope.md) for details.
 
-## Implementations
-
-All implementations must conform to this specification:
-
-- **ai-resource-core-go** - Go implementation
-
 ## Contributing
 
 This repository is the canonical source of truth for the AI Resource contract. Changes to the specification require careful consideration of backward compatibility and implementation impact.
